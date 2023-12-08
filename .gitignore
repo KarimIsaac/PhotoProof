@@ -1,0 +1,7 @@
+**/node_modules
+**/AlbumCovers/*
+**/Images/Photos/*
+**/ProfileImages/*
+**/Watermarked/*
+
+!**/dontIgnoreFolder.txt

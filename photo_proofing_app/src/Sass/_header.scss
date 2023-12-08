@@ -1,0 +1,79 @@
+header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  justify-items: space-between;
+  background: $dark;
+  height: $headerHeight;
+  @include media615 {
+    display: block;
+    height: auto;
+  }
+  picture {
+    display: block;
+    height: auto;
+    @include media615 {
+      max-width: 200px;
+      margin: 80px auto;
+    }
+    img {
+      height: 100%;
+    }
+  }
+  #menuDiv {
+    display: none;
+    border-radius: 10px;
+    width: 100%;
+    @include media615 {
+      display: block;
+    }
+    button {
+      margin-left: 60%;
+      border-radius: 10px;
+    }
+  }
+  nav {
+    height: 100%;
+    @include media615 {
+      display: none;
+      height: auto;
+    }
+    ul {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 4px;
+      align-content: center;
+      justify-content: right;
+      margin-right: 10%;
+      @include media615 {
+        grid-template-columns: 1fr;
+        max-width: 80%;
+        margin: 20px auto;
+      }
+      a {
+        color: $light;
+        border: 1px solid $light;
+        min-width: 80px;
+        display: block;
+        text-align: center;
+        padding: 5px;
+        @include media615 {
+          margin: 6px auto;
+        }
+      }
+    }
+  }
+  #loggedInDiv {
+    display: grid;
+    place-content: center;
+    margin-right: 10px;
+    span {
+      color: $light;
+    }
+    button {
+      margin-top: 6px;
+      width: 100%;
+    }
+  }
+}
