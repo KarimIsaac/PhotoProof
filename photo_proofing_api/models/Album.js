@@ -63,7 +63,8 @@ const AlbumSchema = new mongoose.Schema(
     ],
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "User", // Reference to the User model
+      required: true,
     },
   },
   { collection: "Album" }

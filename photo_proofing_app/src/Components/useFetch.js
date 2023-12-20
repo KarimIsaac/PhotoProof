@@ -28,6 +28,7 @@ const useFetch = (endpoint) => {
       try {
         const response = await axiosRequest.get(endpoint);
         setData(response.data);
+        console.log(response.data);
         setLoading(false);
       } catch (error) {
         setError(error);

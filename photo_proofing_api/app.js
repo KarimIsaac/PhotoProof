@@ -7,6 +7,8 @@ const albumRoutes = require("./routes/album");
 const photoRoutes = require("./routes/photo");
 
 
+require("dotenv").config();
+
 
 const app = express(); // Skapar en express applikation
 
@@ -22,7 +24,9 @@ app.use("/api/album", albumRoutes);
 app.use("/api/photo", photoRoutes);
 
 //Anslutning till databasen
-mongoose.connect('mongodb+srv://karim:karim@cluster5.e3sttob.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.DB_URI, () => {
+  console.log("Connected to database!");
+})
   .then(() => {
     console.log('Connected to MongoDB Atlas.')
     

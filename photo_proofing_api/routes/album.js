@@ -8,13 +8,19 @@ const fs = require("fs"); // File system
 
 //Hämta alla album
 router.get("/", verify, async (req, res) => {
-  try {
-    const albums = await Album.find();
-    res.status(200).json(albums);
-  } catch (err) {
-    res.status(500).json({ error: err.message }); // Om något går fel
-  }
-});
+  const userId = req.user._id;
+  
+    if(userId){
+      try {
+        const albums = await Album.find({ owner: userId });
+        res.status(200).json(albums);
+      } catch (err) {
+        res.status(500).json({ error: err.message }); // Om något går fel
+      }
+}else{
+  res.status(401).json({ error: "Not authorized" });
+  
+}});
 
 //hämta med id
 router.get("/:id", verify, async (req, res) => {
@@ -44,13 +50,19 @@ router.get("/email/:email", verify, async (req, res) => {
 
 //hämta alla med foreign key owner
 router.get("/user/:id", verify, async (req, res) => {
-  try {
-    const albums = await Album.find({ owner: req.params.id });
-    res.status(200).json(albums);
-  } catch (err) {
-    res.status(500).json({ error: err.message }); // Om något går fel
-  }
-});
+  const userId = req.user._id;
+  
+    if(userId === req.params.id){
+      try {
+        const albums = await Album.find({ owner: req.params.id });
+        res.status(200).json(albums);
+      } catch (err) {
+        res.status(500).json({ error: err.message }); // Om något går fel
+      }
+}else{
+  res.status(401).json({ error: "Not authorized" });
+  
+}});
 
 //Skapa nytt album
 router.post("/", verify, async (req, res) => {

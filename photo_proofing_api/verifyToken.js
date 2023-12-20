@@ -1,16 +1,16 @@
+//verfiytoken.js
 const jwt = require("jsonwebtoken");
 
 module.exports = function (req, res, next) {
-  const token = req.header("token"); //Hämtar token från header
+  const token = req.header("token"); // Get token from header
   if (!token)
-    //Om token inte finns
     return res.status(401).json({ Message: "No authentication token found" });
 
   try {
-    const verified = jwt.verify(token, process.env.TOKEN_SECRET); //Kontrollerar token mot process.env.TOKEN_SECRET
-    req.user = verified.user; //Sätter req.user till den som är inloggad
+    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.user = { _id: verified._id }; // Set user ID directly in req.user
     next();
   } catch (err) {
-    res.status(401).json({ Message: "Not a valid token" }); //Om token inte är giltig
+    res.status(401).json({ Message: "Not a valid token" });
   }
 };

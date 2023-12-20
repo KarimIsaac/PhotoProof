@@ -1,4 +1,5 @@
 //Komponent för specifikt album
+
 import useFetch from "../Components/useFetch";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -239,9 +240,13 @@ const Album = (props) => {
   if (errorPhotos) {
     return <p>There was an error fetching photos.. {errorPhotos.message}</p>;
   }
-
+  if (!owner) {
+    return null;
+  }
   return (
+    
     <section className="AlbumSection">
+      
       <h1>{sentAlbum.name}</h1>
       <div className="tagsDiv">
         {sentAlbum.tags.map((tag) => {

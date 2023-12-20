@@ -1,3 +1,4 @@
+//ShareAl
 import { useState, useEffect } from "react";
 import useFetch from "./useFetch";
 
@@ -9,7 +10,7 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
   const [loading, setLoading] = useState(false);
   const [album, setAlbum] = useState(sentAlbum);
   const [shared, setShared] = useState("");
-
+  const [allowDownload, setAllowDownload] = useState(true);
   const {
     data,
     loading: loadingData,
@@ -52,6 +53,7 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
           addEmail: {
             email: email,
             watermarked: watermarked,
+            allowDownload: allowDownload,
           },
         }),
       });
@@ -165,10 +167,33 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
             <span>No</span>
           </div>
         </div>
-
+        <div className="formDiv">
+  <label htmlFor="download">Enable Download</label>
+  <div className="radioDiv">
+    <input
+      type="radio"
+      name="download"
+      value="true"
+      onChange={() => setAllowDownload(true)} // Update state when "Yes" is selected
+      checked={allowDownload} // Bind the checked property
+    />
+    <span>Yes</span>
+  </div>
+  <div className="radioDiv">
+    <input
+      type="radio"
+      name="download"
+      value="false"
+      onChange={() => setAllowDownload(false)} // Update state when "No" is selected
+      checked={!allowDownload} // Bind the checked property
+    />
+    <span>No</span>
+  </div>
+</div>
         <div className="formDiv">
           <input type="submit" value="Share with Email" />
         </div>
+        
       </form>
       {data && data.invites.length > 0 && (
         <div className="invitesDiv">
@@ -183,7 +208,7 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
                   {invite.done && (
                     <span
                       id={invite.email}
-                      onClick={(e) => {
+                        onClick={(e) => {
                         localStorage.setItem("detailsEmail", e.target.id);
                         handleShowDetails();
                       }}
