@@ -8,6 +8,7 @@ const ProfileInvites = ({ role }) => {
     loading,
     error,
   } = useFetch(`album/email/${localStorage.getItem("email")}`);
+  
   return (
     <>
       {loading && (
@@ -40,6 +41,7 @@ const ProfileInvites = ({ role }) => {
               </Link>
             </div>
           ))}
+          
         </div>
       )}
     </>

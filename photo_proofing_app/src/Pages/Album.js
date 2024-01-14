@@ -240,9 +240,7 @@ const Album = (props) => {
   if (errorPhotos) {
     return <p>There was an error fetching photos.. {errorPhotos.message}</p>;
   }
-  if (!owner) {
-    return null;
-  }
+  
   return (
     
     <section className="AlbumSection">
