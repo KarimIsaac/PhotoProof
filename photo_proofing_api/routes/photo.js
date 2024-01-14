@@ -36,12 +36,19 @@ router.get("/", verify, async (req, res) => {
 });
 
 //Download images
-router.get("/download", verify, async (req, res) => {
+router.get('/download/:filename', verify, async (req, res) => {
   try {
-    const photos = await Photo.find();
-    res.status(200).json(photos);
+    const filename = req.params.filename;
+    const filePath = `${__dirname}/../../photo_proofing_app/public/Images/Photos/${filename}`;
+    
+    // Check if file exists
+    if (fs.existsSync(filePath)) {
+      res.download(filePath); // Set the download response
+    } else {
+      res.status(404).send('File not found');
+    }
   } catch (err) {
-    res.status(500).json({ error: err.message }); // Om något går fel
+    res.status(500).send('Server error');
   }
 });
 
@@ -285,6 +292,7 @@ router.patch("/:id", verify, async (req, res) => {
         });
       }
     }
+    
     await photo.save();
     res.json({ Updated: req.params.id });
   } catch (err) {

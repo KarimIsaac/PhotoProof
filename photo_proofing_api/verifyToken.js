@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
 
   try {
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-    req.user = { _id: verified._id }; // Set user ID directly in req.user
+    req.user = { _id: verified._id,}; // 
     next();
   } catch (err) {
     res.status(401).json({ Message: "Not a valid token" });

@@ -5,7 +5,7 @@ import MyAlbums from "../Components/ProfileAlbums";
 import MyInvites from "../Components/ProfileInvites";
 import useFetch from "../Components/useFetch";
 import TitleRename from "../utility/TitleRename";
-
+import Admin from "./Admin";
 const Profile = () => {
   TitleRename("Photo Proof - Profile");
 
@@ -57,6 +57,7 @@ const Profile = () => {
           </div>
           {profile.role === "Photographer" && <MyAlbums role="Photographer" />}
           {profile.role === "Customer" && <MyInvites role="Customer" />}
+          {profile.role === "Admin" && <Admin role="Admin" />}
         </>
       )}
     </section>

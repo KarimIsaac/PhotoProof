@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import LoadingSVG from "../Images/loading.svg";
 import useFetch from "../Components/useFetch";
+import Notification from "../Components/Notification";
 
 const ProfileAlbums = () => {
   const { data: albums, loading, error } = useFetch(`album/`);
@@ -17,7 +18,7 @@ const ProfileAlbums = () => {
   }
 
   return (
-    <section id="profileAlbumsSection">
+    <><Notification /><section id="profileAlbumsSection">
       <div id="profileAlbumTop">
         <h2>My Albums</h2>
         <Link to="Album/New">Create new album</Link>
@@ -39,8 +40,7 @@ const ProfileAlbums = () => {
                   <picture>
                     <img
                       src={"../Images/AlbumCovers/" + album.cover}
-                      alt={album.name}
-                    />
+                      alt={album.name} />
                   </picture>
                   <h3>{album.name}</h3>
                 </div>
@@ -49,7 +49,7 @@ const ProfileAlbums = () => {
           })}
         </div>
       )}
-    </section>
+    </section></>
   );
 };
 

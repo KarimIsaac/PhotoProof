@@ -155,6 +155,7 @@ const Register = () => {
             />
             <span>Photographer</span>
           </div>
+          
         </div>
         {error ? (
           <div className="formDiv">

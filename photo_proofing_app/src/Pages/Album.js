@@ -199,7 +199,7 @@ const Album = (props) => {
   };
 
   const checkLiked = (photo) => {
-    //Kollar om en bild är likad, returnerar true eller false
+    //Kollar om en bild är likad, returnerar true eller     false
     if (photo.likes.length > 0) {
       for (let i = 0; i < photo.likes.length; i++) {
         if (photo.likes[i].userID === localStorage.getItem("id")) {

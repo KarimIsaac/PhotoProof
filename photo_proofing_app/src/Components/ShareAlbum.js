@@ -50,7 +50,7 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
           token: localStorage.getItem("token"),
         },
         body: JSON.stringify({
-          addEmail: {
+            addEmail: {
             email: email,
             watermarked: watermarked,
             allowDownload: allowDownload,
@@ -222,7 +222,9 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
                   <button onClick={removeShare}>Remove Share</button>
                   <button onClick={toggleWatermark}>Toggle WM</button>
                 </div>
+                
               </div>
+              
             );
           })}
         </div>

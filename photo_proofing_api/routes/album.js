@@ -1,30 +1,42 @@
+
 const express = require("express"); // Express web server framework
 const router = express.Router(); // Router för express
 const Album = require("../models/Album"); // Album model
 const Photo = require("../models/Photo"); // Photo model
 const verify = require("../verifyToken"); // Verify token
+const User = require("../models/User");
 const { createAlbumValidation } = require("../validation"); // Validering
 const fs = require("fs"); // File system
 
+ 
 //Hämta alla album
 router.get("/", verify, async (req, res) => {
   const userId = req.user._id;
-  
-    if(userId){
-      try {
-        const albums = await Album.find({ owner: userId });
-        res.status(200).json(albums);
-      } catch (err) {
-        res.status(500).json({ error: err.message }); // Om något går fel
-      }
-}else{
-  res.status(401).json({ error: "Not authorized" });
-  
-}});
 
+
+  try {
+        const user = await User.findById(userId);
+        let albums;
+        const userRole = user.role;
+      
+    if (userRole === 'Admin') {
+      
+      albums = await Album.find();
+      
+    } else {
+      
+      albums = await Album.find({ owner: userId });
+      
+    }
+    res.status(200).json(albums);
+  } catch (err) {
+    res.status(500).json({ error: err.message }); // Om något går fel
+  }
+});
 //hämta med id
 router.get("/:id", verify, async (req, res) => {
   try {
+    
     const album = await Album.findById(req.params.id);
     res.status(200).json(album);
   } catch (err) {
@@ -79,6 +91,7 @@ router.post("/", verify, async (req, res) => {
       }
     );
   }
+  
   //Joi validering
   const { error } = createAlbumValidation(req.body);
   if (error) return res.status(400).json(error.details[0].message); //Om något går fel
@@ -169,13 +182,13 @@ router.patch("/:id", verify, async (req, res) => {
     req.body.cover ? (album.cover = req.body.cover) : null;
     req.body.owner ? (album.owner = req.body.owner) : null;
     req.body.done
-      ? (album.done = album.invites.map((invite) => {
-          if (invite.email === req.body.email) {
-            invite.done = req.body.done;
-            invite.comment = req.body.comment;
-          }
-        }))
-      : null;
+    ? album.invites.forEach((invite) => {
+      if (invite.email === req.body.email) {
+        invite.done = req.body.done;
+        invite.comment = req.body.comment; // Update the comment field
+      }
+    })
+  : null;
     req.body.allowDownload
       ? (album.done = album.invites.map((invite) => {
           if (invite.email === req.body.email) {

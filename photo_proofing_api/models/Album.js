@@ -55,6 +55,8 @@ const AlbumSchema = new mongoose.Schema(
           default: [],
         },
         comment: {
+          userName: String,
+          text:String,
           type: String,
           trim: true,
           maxlength: 1000,

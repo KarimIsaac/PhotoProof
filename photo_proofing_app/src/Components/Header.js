@@ -4,7 +4,7 @@ import AuthContext from "../Store/auth-context";
 import { useContext, useState } from "react";
 import LogOutButton from "./LogOutButton";
 import Menu from "../Images/menu.svg";
-
+import Notification from "./Notification";
 const Header = () => {
   const authContext = useContext(AuthContext);
   const [showMenu, setShowMenu] = useState(true);
@@ -50,6 +50,7 @@ const Header = () => {
           <div id="loggedInDiv">
             {authContext.isLoggedIn ? <LogOutButton /> : null}
           </div>
+          
         </>
       )}
     </header>

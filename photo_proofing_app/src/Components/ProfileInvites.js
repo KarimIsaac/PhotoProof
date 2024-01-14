@@ -1,7 +1,6 @@
 import useFetch from "../Components/useFetch";
 import LoadingSVG from "../Images/loading.svg";
 import { Link } from "react-router-dom";
-
 const ProfileInvites = ({ role }) => {
   const {
     data: album,
@@ -11,6 +10,7 @@ const ProfileInvites = ({ role }) => {
   
   return (
     <>
+    
       {loading && (
         <div className="loading">
           <img src={LoadingSVG} alt="loading" />

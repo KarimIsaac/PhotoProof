@@ -75,6 +75,11 @@ const UserSchema = new mongoose.Schema(
       enum: ["Photographer", "Customer", "Admin"],
       default: "Customer",
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+
   },
   { collection: "User" }
 );
