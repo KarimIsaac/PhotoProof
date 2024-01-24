@@ -4,6 +4,7 @@ import { saveAs } from 'file-saver';
 const Download = ({ photosGet, sentAlbum }) => {
 
   const handleDownload = async () => {
+    
     const zip = new JSZip();
     for (const photo of photosGet) {
       try {
@@ -23,15 +24,13 @@ const Download = ({ photosGet, sentAlbum }) => {
 
   return (
     <div>
-      {/* Download all button */}
-      <button onClick={handleDownload}>
-        Download All as ZIP
-      </button>
-      {/* Individual download buttons */}
+      
       {photosGet.map(photo => (
-        <button key={photo._id} onClick={() => handleDownload(photo.name)}>
-          Download {photo.name}
-        </button>
+        photo.allowDownload && (
+          <button key={photo._id} onClick={() => handleDownload(photo.name)}>
+            Download {photo.name}
+          </button>
+        )
       ))}
     </div>
   );

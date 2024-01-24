@@ -260,6 +260,7 @@ const Album = (props) => {
           <p>{sentAlbum.description}</p>
         </div>
       )}
+      
       {owner && (
         <div className="buttonDiv">
           <button
@@ -325,6 +326,7 @@ const Album = (props) => {
           handleShowDetails={handleShowDetails}
         />
       )}
+      
       {showDetails && owner && (
         <ShowDetailsComponent
           sentAlbum={albumGet}
@@ -357,6 +359,10 @@ const Album = (props) => {
           </form>
         </>
       )}
+       
+
+
+
       <div id="collection">
         {photosGet.length === 0 && <h2>No Photos found, Add photos!</h2>}
         {photosGet.map((photo) => {
@@ -372,6 +378,7 @@ const Album = (props) => {
               >
                 <img src={owner ? DeleteIcon : LikeIcon} alt="Delete" />
               </span>
+              
               <picture className="photo">
                 <img
                   src={
@@ -382,10 +389,12 @@ const Album = (props) => {
                   alt={photo.name}
                 />
               </picture>
+              
             </div>
           );
         })}
       </div>
+      
     </section>
   );
 };

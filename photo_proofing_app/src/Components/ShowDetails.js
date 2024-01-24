@@ -5,7 +5,7 @@ const ShowDetails = ({ sentAlbum, photosGet }) => {
       {sentAlbum.invites.map((invite) => {
         if (invite.email === localStorage.getItem("detailsEmail")) {
           return (
-            <div class="detailsDiv" id={invite._id} key={invite._id}>
+            <div className="detailsDiv" id={invite._id} key={invite._id}>
               <h2>Sharing Details</h2>
               <p>{invite.email}</p>
               <p>Watermarked: {invite.watermarked ? "Yes" : "No"}</p>
@@ -25,6 +25,7 @@ const ShowDetails = ({ sentAlbum, photosGet }) => {
                   }
                 }
               })}
+              
               {photosArray.length > 0 && (
                 <div class="likedImagesDiv">
                   <h3>Liked Photos</h3>
@@ -33,6 +34,7 @@ const ShowDetails = ({ sentAlbum, photosGet }) => {
                   })}
                 </div>
               )}
+              
             </div>
           );
         }

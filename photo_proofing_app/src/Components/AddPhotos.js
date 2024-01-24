@@ -18,7 +18,7 @@ const AddPhotos = (props) => {
   const [isDragOverDropzone, setIsDragOverDropzone] = useState(false);
 
   const [error, setError] = useState("");
-
+  const [allowDownload, setAllowDownload] = useState(true);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -87,6 +87,7 @@ const AddPhotos = (props) => {
       setFileNames(newPhotos);
       setPreview(newPreview);
       setUploadMessage("");
+      
     } else {
       setFiles(null);
       setFileNames(null);
@@ -156,6 +157,15 @@ const AddPhotos = (props) => {
     <form onSubmit={handleSubmit}>
       <h2>Upload Photos</h2>
       <div className="formDiv">
+      <label>
+          Allow Download:
+          <input
+            type="checkbox"
+            checked={allowDownload}
+            onChange={(e) => setAllowDownload(e.target.checked)}
+          />
+        </label>
+        
         <div id="dragAndDropDiv">
           <div
             id="dropZone"

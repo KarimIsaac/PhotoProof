@@ -33,6 +33,7 @@ router.get("/", verify, async (req, res) => {
     res.status(500).json({ error: err.message }); // Om något går fel
   }
 });
+
 //hämta med id
 router.get("/:id", verify, async (req, res) => {
   try {

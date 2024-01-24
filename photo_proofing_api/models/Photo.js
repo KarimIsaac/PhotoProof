@@ -31,7 +31,9 @@ const PhotoSchema = new mongoose.Schema(
         email: { type: String, trim: true, minlength: 2, maxlength: 100 },
       },
     ],
-    allowDownload: { type: Boolean, default: true }
+    allowDownload: 
+    
+    { type: Boolean, default: false }
   },
   { collection: "Photo" }
 );

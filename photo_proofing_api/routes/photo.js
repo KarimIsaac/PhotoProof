@@ -37,13 +37,14 @@ router.get("/", verify, async (req, res) => {
 
 //Download images
 router.get('/download/:filename', verify, async (req, res) => {
+  
   try {
     const filename = req.params.filename;
     const filePath = `${__dirname}/../../photo_proofing_app/public/Images/Photos/${filename}`;
     
     // Check if file exists
     if (fs.existsSync(filePath)) {
-      res.download(filePath); // Set the download response
+      res.download(filePath); 
     } else {
       res.status(404).send('File not found');
     }
@@ -51,6 +52,7 @@ router.get('/download/:filename', verify, async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+
 
 //hämta med id
 router.get("/:id", verify, async (req, res) => {
@@ -109,6 +111,7 @@ router.post("/", verify, async (req, res) => {
             watermarked: req.body.watermarked[i],
             album: req.body.album[i],
             owner: req.body.owner[i],
+            allowDownload: req.body.allowDownload[i]
           });
           photosArray.push(photo);
         }
@@ -253,6 +256,7 @@ router.delete("/album/:id", verify, async (req, res) => {
 
 router.patch("/:id", verify, async (req, res) => {
   try {
+    
     //Upload photo
     if (req.files) {
       const file = req.files.file;
