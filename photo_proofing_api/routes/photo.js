@@ -35,14 +35,14 @@ router.get("/", verify, async (req, res) => {
   }
 });
 
-//Download images
+
 router.get('/download/:filename', verify, async (req, res) => {
   
   try {
     const filename = req.params.filename;
     const filePath = `${__dirname}/../../photo_proofing_app/public/Images/Photos/${filename}`;
     
-    // Check if file exists
+   
     if (fs.existsSync(filePath)) {
       res.download(filePath); 
     } else {
@@ -52,7 +52,24 @@ router.get('/download/:filename', verify, async (req, res) => {
     res.status(500).send('Server error');
   }
 });
+router.patch("/allowDownload/:id", verify, async (req, res) => {
+  try {
+    const { allowDownload } = req.body;
+    const photo = await Photo.findById(req.params.id);
+    if (!photo) {
+      return res.status(404).json({ message: "Photo not found" });
+    }
 
+    
+    photo.allowDownload = allowDownload;
+    await photo.save();
+    res.status(200).json(photo);
+  } catch (err) {
+    
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 //hämta med id
 router.get("/:id", verify, async (req, res) => {

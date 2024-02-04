@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ShareAlbum from '../Components/ShareAlbum'; 
-
+import { Link } from "react-router-dom";
 import useFetch from "../Components/useFetch";
 import LoadingSVG from "../Images/loading.svg";
 

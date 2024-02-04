@@ -13,13 +13,15 @@ import DeleteIcon from "../Images/delete.svg";
 import RemoveIcon from "../Images/remove.svg";
 import LikeIcon from "../Images/favorite.svg";
 import TitleRename from "../utility/TitleRename";
-
+import { useEffect } from "react";
 const Album = (props) => {
   TitleRename("Photo Proof - Album");
 
   const location = useLocation();
-  const { sentAlbum, role } = location.state; //Hämtar album från medskickad state
 
+   // Debugging to check the state content
+  const { sentAlbum, role } = location.state 
+  console.log("Role:", role);
   const [showEdit, setShowEdit] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showShare, setShowShare] = useState(false);
@@ -28,12 +30,11 @@ const Album = (props) => {
   const [deleteArray, setDeleteArray] = useState([]);
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState("");
-
   let owner = false;
   if (sentAlbum.owner === localStorage.getItem("id")) {
     owner = true;
   }
-
+  
   const {
     data: photosGet,
     loading: loadingPhotos,
@@ -146,7 +147,29 @@ const Album = (props) => {
       e.target.src = RemoveIcon;
     }
   };
-
+ 
+  
+  const allowDownload = async (photoId, allowDownload) => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await fetch(`http://localhost:8000/api/photo/allowDownload/${photoId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': `${token}`, 
+        },
+        body: JSON.stringify({ allowDownload })
+      });
+  
+      if (response.ok) {
+       
+      } else {
+        
+      }
+    } catch (error) {
+      
+    }
+  };
   const deletePhotos = async () => {
     try {
       await fetch("http://localhost:8000/api/photo/many", {
@@ -209,7 +232,7 @@ const Album = (props) => {
     }
     return false;
   };
-
+  
   const sendRequest = async () => {
     //Uppdatera album och visa för fotograf att kund "likat" färdigt
     try {
@@ -360,13 +383,14 @@ const Album = (props) => {
         </>
       )}
        
-
+      
 
 
       <div id="collection">
         {photosGet.length === 0 && <h2>No Photos found, Add photos!</h2>}
         {photosGet.map((photo) => {
           return (
+            <div key={photo._id} className="photo-container">
             <div
               className={checkLiked(photo) ? "liked photoDiv" : "photoDiv"}
               id={photo._id}
@@ -391,6 +415,18 @@ const Album = (props) => {
               </picture>
               
             </div>
+           
+            {(role.role === "Admin" || role.role === "Photographer") && (
+  <input
+    type="checkbox"
+    checked={photo.allowDownload}
+    onChange={() => allowDownload(photo._id, !photo.allowDownload)}
+  />
+)}
+            
+        
+      
+</div>
           );
         })}
       </div>

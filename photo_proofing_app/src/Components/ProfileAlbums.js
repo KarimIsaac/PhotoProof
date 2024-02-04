@@ -4,7 +4,7 @@ import LoadingSVG from "../Images/loading.svg";
 import useFetch from "../Components/useFetch";
 import Notification from "../Components/Notification";
 
-const ProfileAlbums = () => {
+const ProfileAlbums = (role) => {
   const { data: albums, loading, error } = useFetch(`album/`);
   if (loading) {
     return (
@@ -29,10 +29,13 @@ const ProfileAlbums = () => {
         <div id="albums">
           {albums.map((album) => {
             return (
+              
               <Link
+              
                 to={"/Profile/Album/" + album._id}
                 state={{
                   sentAlbum: album,
+                  role: role,
                 }}
                 key={album._id}
               >
@@ -43,6 +46,7 @@ const ProfileAlbums = () => {
                       alt={album.name} />
                   </picture>
                   <h3>{album.name}</h3>
+                  
                 </div>
               </Link>
             );

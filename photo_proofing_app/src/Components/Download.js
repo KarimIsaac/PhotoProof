@@ -1,33 +1,26 @@
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
+
 
 const Download = ({ photosGet, sentAlbum }) => {
 
-  const handleDownload = async () => {
-    
-    const zip = new JSZip();
-    for (const photo of photosGet) {
-      try {
-        const response = await fetch(`/download/${photo.name}`);
-        if (!response.ok) {
-          throw new Error(`Failed to download ${photo.name}`);
-        }
-        const blob = await response.blob();
-        zip.file(photo.name, blob);
-      } catch (error) {
-        console.error('Error downloading file:', error);
-      }
-    }
-    const zipBlob = await zip.generateAsync({ type: 'blob' });
-    saveAs(zipBlob, 'photos.zip');
-  };
+  const download= async (photoName) => {
+    const response = await fetch(`../../Images/Photos/${photoName}`);
+    const blob = await response.blob();
+    const downloadUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = photoName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};
+
+  
 
   return (
     <div>
-      
       {photosGet.map(photo => (
         photo.allowDownload && (
-          <button key={photo._id} onClick={() => handleDownload(photo.name)}>
+          <button key={photo._id} onClick={() => download(photo.name)}>
             Download {photo.name}
           </button>
         )

@@ -18,7 +18,7 @@ router.get("/", verify, async (req, res) => {
         const user = await User.findById(userId);
         let albums;
         const userRole = user.role;
-      
+  
     if (userRole === 'Admin') {
       
       albums = await Album.find();

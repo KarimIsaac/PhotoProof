@@ -11,6 +11,11 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
   const [album, setAlbum] = useState(sentAlbum);
   const [shared, setShared] = useState("");
   const [allowDownload, setAllowDownload] = useState(true);
+  const [selectedEmail, setSelectedEmail] = useState('');
+  const handleSelectEmail = (e) => {
+    setSelectedEmail(e.target.value);
+    // Further logic to filter and display photos based on the selected email
+  };
   const {
     data,
     loading: loadingData,
@@ -128,6 +133,7 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
 
   return (
     <>
+    
       <form onSubmit={handleSubmit}>
         <h2>Share Album</h2>
         <div className="formDiv">
@@ -174,8 +180,8 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
       type="radio"
       name="download"
       value="true"
-      onChange={() => setAllowDownload(true)} // Update state when "Yes" is selected
-      checked={allowDownload} // Bind the checked property
+      onChange={() => setAllowDownload(true)} 
+      checked={allowDownload} 
     />
     <span>Yes</span>
   </div>
@@ -196,7 +202,16 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
         
       </form>
       {data && data.invites.length > 0 && (
+        
         <div className="invitesDiv">
+          <div>
+      <select onChange={handleSelectEmail} value={selectedEmail}>
+        {sentAlbum.invites.map((invite) => (
+          <option key={invite.email} value={invite.email}>{invite.email}</option>
+        ))}
+      </select>
+      {/* Rest of your form and components */}
+    </div>
           <h2>Shared</h2>
           {data.invites.map((invite) => {
             return (
