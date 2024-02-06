@@ -38,6 +38,7 @@ function App() {
             )}
             {authContext.isLoggedIn && (
               <>
+              
                 <Route exact path="/Profile" element={<Profile />} />
                 <Route
                   exact

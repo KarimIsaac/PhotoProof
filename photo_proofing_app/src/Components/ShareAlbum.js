@@ -14,7 +14,7 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
   const [selectedEmail, setSelectedEmail] = useState('');
   const handleSelectEmail = (e) => {
     setSelectedEmail(e.target.value);
-    // Further logic to filter and display photos based on the selected email
+    
   };
   const {
     data,

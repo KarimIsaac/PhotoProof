@@ -35,14 +35,14 @@ router.get("/", verify, async (req, res) => {
   }
 });
 
-
+//Download images
 router.get('/download/:filename', verify, async (req, res) => {
   
   try {
     const filename = req.params.filename;
     const filePath = `${__dirname}/../../photo_proofing_app/public/Images/Photos/${filename}`;
     
-   
+    // Check if file exists
     if (fs.existsSync(filePath)) {
       res.download(filePath); 
     } else {
@@ -54,19 +54,22 @@ router.get('/download/:filename', verify, async (req, res) => {
 });
 router.patch("/allowDownload/:id", verify, async (req, res) => {
   try {
-    const { allowDownload } = req.body;
     const photo = await Photo.findById(req.params.id);
     if (!photo) {
       return res.status(404).json({ message: "Photo not found" });
     }
-
     
-    photo.allowDownload = allowDownload;
-    await photo.save();
-    res.status(200).json(photo);
+    const user = await User.findById(req.user._id); // Assuming `verify` middleware adds `user` to `req`
+    
+    // Check if the user is the admin or the owner of the photo and if their role is 'Admin' or 'Photographer'
+    if (user.role === 'Admin' || (user.role === 'Photographer' && photo.owner.toString() === user._id.toString())) {
+      photo.allowDownload = req.body.allowDownload;
+      await photo.save();
+      res.status(200).json(photo);
+    } else {
+      res.status(403).json({ message: "Unauthorized to change download settings" });
+    }
   } catch (err) {
-    
-    console.error(err);
     res.status(500).json({ error: err.message });
   }
 });
