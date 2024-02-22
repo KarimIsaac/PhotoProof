@@ -29,12 +29,15 @@ const PhotoSchema = new mongoose.Schema(
       {
         userID: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
         email: { type: String, trim: true, minlength: 2, maxlength: 100 },
+        
+
       },
     ],
     allowDownload: 
     
     { type: Boolean, default: false }
   },
+  
   { collection: "Photo" }
 );
 

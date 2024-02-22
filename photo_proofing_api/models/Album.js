@@ -9,6 +9,7 @@ const AlbumSchema = new mongoose.Schema(
       maxlength: 50,
       required: true,
     },
+    
     description: {
       type: String,
       trim: true,
@@ -46,6 +47,7 @@ const AlbumSchema = new mongoose.Schema(
           type: Boolean,
           default: true,
         },
+        
         done: {
           type: Boolean,
           default: false,
@@ -61,6 +63,8 @@ const AlbumSchema = new mongoose.Schema(
           trim: true,
           maxlength: 1000,
         },
+        allowDownload: { type: Boolean, default: false }, 
+
       },
     ],
     owner: {

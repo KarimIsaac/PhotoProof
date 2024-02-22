@@ -178,6 +178,7 @@ const Album = (props) => {
           "Content-Type": "application/json",
           Accept: "application/json",
           token: localStorage.getItem("token"),
+          
         },
         body: JSON.stringify({ ids: deleteArray }),
       });
@@ -283,9 +284,10 @@ const Album = (props) => {
           <p>{sentAlbum.description}</p>
         </div>
       )}
-      
-      {owner && (
-        <div className="buttonDiv">
+      {showShare && (owner || role === "Admin") && (
+  <ShareAlbum sentAlbum={albumGet} refetchAlbum={refetchAlbum} />
+)}
+      {owner || role === "Admin" && (        <div className="buttonDiv">
           <button
             style={
               showEdit

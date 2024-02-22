@@ -1,4 +1,3 @@
-//ShareAl
 import { useState, useEffect } from "react";
 import useFetch from "./useFetch";
 

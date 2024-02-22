@@ -27,12 +27,16 @@ const Admin = () => {
     }
 
     return (
+        
         <div className="adminPanel">
+            
             <h1>Admin Panel</h1>
+            
             <section id="allAlbumsSection">
                 <h2>All Albums</h2>
                 <div id="albums">
                     {albums.map((album) => (
+                        
                         <div key={album._id} className="album" onClick={() => handleSelectAlbum(album)}>
                             <img 
                                 src={`../../Images/AlbumCovers/${album.cover}`} 
@@ -40,6 +44,7 @@ const Admin = () => {
                             />
                             <h3>{album.name}</h3>
                         </div>
+                        
                     ))}
                 </div>
             </section>

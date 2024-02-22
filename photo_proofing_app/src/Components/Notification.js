@@ -21,6 +21,7 @@ const NotificationBar = () => {
         Notifications ({notifications.length})
       </button>
       {isPanelOpen && (
+        
         <NotificationPanel notifications={notifications} />
       )}
     </div>
@@ -31,8 +32,11 @@ const NotificationPanel = ({ notifications }) => {
   return (
     <div className="notification-panel">
       {notifications.map(notification => (
+        
         <div key={notification.id}>{notification.message}</div>
+        
       ))}
+      
     </div>
   );
 };
