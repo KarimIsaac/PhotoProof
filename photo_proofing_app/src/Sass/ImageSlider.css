@@ -1,0 +1,31 @@
+@import "react-slideshow-image/dist/styles.css";
+.slide-container {
+    width: 100%;
+    max-width: 1500px; 
+    margin: auto;
+    overflow: hidden;
+    border-radius: 10px; 
+  }
+  
+  
+  .slideshow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px; 
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+  }
+  
+ 
+  .slideshow span {
+    color: white;
+    font-size: 24px; 
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 5px;
+    
+  }
+  
+  

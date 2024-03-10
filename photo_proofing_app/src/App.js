@@ -32,7 +32,7 @@ function App() {
             <Route exact path="/" element={<Home />} />
             {!authContext.isLoggedIn && (
               <>
-                <Route exact path="/login" element={<Login />} />
+                <Route  exact path="/login" element={<Login />} />
                 <Route exact path="/register" element={<Register />} />
               </>
             )}

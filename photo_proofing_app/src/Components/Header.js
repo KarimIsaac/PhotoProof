@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import LogOutButton from "./LogOutButton";
 import Menu from "../Images/menu.svg";
 import Notification from "./Notification";
+import Logoo from "../Images/logo.png";
 const Header = () => {
   const authContext = useContext(AuthContext);
   const [showMenu, setShowMenu] = useState(true);
@@ -16,7 +17,7 @@ const Header = () => {
   return (
     <header>
       <picture>
-        <img src={Logo} alt="Logotype" />
+        <img src={Logoo} alt="Logo" />
       </picture>
       <div id="menuDiv">
         <button onClick={toggleMenu}>

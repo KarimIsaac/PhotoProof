@@ -34,7 +34,9 @@ const Album = (props) => {
   if (sentAlbum.owner === localStorage.getItem("id")) {
     owner = true;
   }
-  
+  const isOwner = sentAlbum.owner === localStorage.getItem("id");
+  const isAdmin = role === "Admin";
+  const showOptions = isOwner || isAdmin;
   const {
     data: photosGet,
     loading: loadingPhotos,
@@ -284,10 +286,9 @@ const Album = (props) => {
           <p>{sentAlbum.description}</p>
         </div>
       )}
-      {showShare && (owner || role === "Admin") && (
-  <ShareAlbum sentAlbum={albumGet} refetchAlbum={refetchAlbum} />
-)}
-      {owner || role === "Admin" && (        <div className="buttonDiv">
+      
+      {showOptions && (       
+      <div className="buttonDiv">
           <button
             style={
               showEdit
@@ -338,13 +339,13 @@ const Album = (props) => {
           </button>
         </div>
       )}
-      {showEdit && owner && (
+      {showEdit && isOwner  && (
         <EditAlbum sentAlbum={albumGet} refetchAlbum={refetchAlbum} />
       )}
-      {showAdd && owner && (
+      {showAdd && isOwner  && (
         <AddPhotos sentAlbum={albumGet} refetchPhotos={refetchPhotos} />
       )}
-      {showShare && owner && (
+      {showShare && showOptions  && (
         <ShareAlbum
           sentAlbum={albumGet}
           refetchAlbum={refetchAlbum}
@@ -418,7 +419,8 @@ const Album = (props) => {
               
             </div>
            
-            {(role === "Admin" || role === "Photographer" || true) && (  <input
+            {(role.role === "Admin" || role.role === "Photographer") && (
+  <input
     type="checkbox"
     checked={photo.allowDownload}
     onChange={() => allowDownload(photo._id, !photo.allowDownload)}
