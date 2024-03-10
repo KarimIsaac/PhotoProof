@@ -33,9 +33,10 @@ const PhotoSchema = new mongoose.Schema(
 
       },
     ],
-    allowDownload: 
-    
-    { type: Boolean, default: false }
+    allowDownload: {
+      type:Array(String),
+      default: [],
+    }
   },
   
   { collection: "Photo" }

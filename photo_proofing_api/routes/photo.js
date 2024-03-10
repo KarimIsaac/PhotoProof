@@ -4,7 +4,8 @@ const Photo = require("../models/Photo"); // Album model
 const verify = require("../verifyToken"); // Verify token
 const Jimp = require("jimp");
 const fs = require("fs"); // File system
-
+const User = require("../models/User");
+const path = require('path');
 //Jimp function
 const watermarkImage = async (fileName, image, watermark) => {
   let watermarkImage = await Jimp.read(watermark);
@@ -37,46 +38,70 @@ router.get("/", verify, async (req, res) => {
 
 //Download images
 router.get('/download/:filename', verify, async (req, res) => {
-  
+
+    const user = await User.findById(req.user._id); 
+    const photo = await Photo.findOne({name:req.params.filename});
   try {
     const filename = req.params.filename;
-    const filePath = `${__dirname}/../../photo_proofing_app/public/Images/Photos/${filename}`;
-    
-    // Check if file exists
-    if (fs.existsSync(filePath)) {
-      res.download(filePath); 
-    } else {
+    // const filePath = `${__dirname}/../../photo_proofing_app/public/Images/Photos/${filename}`;
+    const filePath =  path.join(__dirname, '../../photo_proofing_app/public/Images/Photos', filename);
+
+    if(photo){
+
+
+         // Check if file exists
+      if (fs.existsSync(filePath) && photo.allowDownload.includes(user.email)) {
+          const fileBuffer = fs.readFileSync(filePath);
+          const ext = path.extname(filename).toLowerCase();
+
+          let contentType = 'image/jpeg'; // Default to jpeg
+          if (ext === '.png') {
+              contentType = 'image/png';
+          } else if (ext === '.webp') {
+              contentType = 'image/webp';
+          }else if(image/jpg){
+            contentType = 'image/jpg';
+          }
+
+          res.set('Content-Type', contentType);
+          res.send(fileBuffer); 
+      } else {
+        res.status(404).send('File not found');
+      }
+    }else {
       res.status(404).send('File not found');
     }
+  
+
   } catch (err) {
+    console.log(err);
     res.status(500).send('Server error');
   }
 });
+
+
 router.patch("/allowDownload/:id", verify, async (req, res) => {
-  try {
-    const { allowDownload } = req.body;
-    const photo = await Photo.findById(req.params.id);
-    if (!photo) {
-      return res.status(404).json({ message: "Photo not found" });
-    }
 
-
-    photo.allowDownload = allowDownload;
-    await photo.save();
-    res.status(200).json(photo);
-    
-  } catch (err) {
     const user = await User.findById(req.user._id); // Assuming `verify` middleware adds `user` to `req`
+    const photo = await Photo.findById(req.params.id);
+    const { email } = req.body;
 
-    console.error(err);
-    // Check if the user is the admin or the owner of the photo and if their role is 'Admin' or 'Photographer'
+  try {
     if (user.role === 'Admin' || (user.role === 'Photographer' && photo.owner.toString() === user._id.toString())) {
-      photo.allowDownload = req.body.allowDownload;
+        
+      if(photo.allowDownload.includes(email)){
+        photo.allowDownload.pull(email);
+      }else {
+        if(email !== "") photo.allowDownload.push(email);
+        else return
+      }
+
       await photo.save();
-      res.status(200).json(photo);
-    } else {
-      res.status(403).json({ message: "Unauthorized to change download settings" });
-    }
+
+  }
+
+  } catch (err) {
+     console.error(err);
   } 
 });
 
@@ -331,3 +356,29 @@ router.patch("/:id", verify, async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
+    // const { allowDownload } = req.body;
+    // const photo = await Photo.findById(req.params.id);
+    // if (!photo) {
+    //   return res.status(404).json({ message: "Photo not found" });
+    // }
+
+
+    // photo.allowDownload = allowDownload;
+    // await photo.save();
+    // res.status(200).json(photo);
+    // const user = await User.findById(req.user._id); // Assuming `verify` middleware adds `user` to `req`
+
+    // // Check if the user is the admin or the owner of the photo and if their role is 'Admin' or 'Photographer'
+    // if (user.role === 'Admin' || (user.role === 'Photographer' && photo.owner.toString() === user._id.toString())) {
+    //   photo.allowDownload = req.body.allowDownload;
+    //   await photo.save();
+    //   res.status(200).json(photo);
+    // } else {
+    //   res.status(403).json({ message: "Unauthorized to change download settings" });
+    // }
+    

@@ -30,6 +30,7 @@ const Album = (props) => {
   const [deleteArray, setDeleteArray] = useState([]);
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState("");
+  const [selectedEmail, setSelectedEmail] = useState('');
   let owner = false;
   if (sentAlbum.owner === localStorage.getItem("id")) {
     owner = true;
@@ -151,7 +152,7 @@ const Album = (props) => {
   };
  
   
-  const allowDownload = async (photoId, allowDownload) => {
+  const allowDownload = async (photoId, email) => {
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(`http://localhost:8000/api/photo/allowDownload/${photoId}`, {
@@ -160,11 +161,11 @@ const Album = (props) => {
           'Content-Type': 'application/json',
           'token': `${token}`, 
         },
-        body: JSON.stringify({ allowDownload })
+        body: JSON.stringify({ email })
       });
   
       if (response.ok) {
-       
+        
       } else {
         
       }
@@ -350,6 +351,8 @@ const Album = (props) => {
           sentAlbum={albumGet}
           refetchAlbum={refetchAlbum}
           handleShowDetails={handleShowDetails}
+          setSelectedEmail={setSelectedEmail}
+          selectedEmail={selectedEmail}
         />
       )}
       
@@ -422,8 +425,8 @@ const Album = (props) => {
             {(role.role === "Admin" || role.role === "Photographer") && (
   <input
     type="checkbox"
-    checked={photo.allowDownload}
-    onChange={() => allowDownload(photo._id, !photo.allowDownload)}
+    checked={photo.allowDownload.includes(selectedEmail)}
+    onChange={() => allowDownload(photo._id, selectedEmail)}
   />
 )}
             

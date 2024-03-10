@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import useFetch from "./useFetch";
 
 //handleShowDetails döljer showEdit, showAdd, showShare och visar showDetails i parent-komponenten
-const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
+const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails,setSelectedEmail,selectedEmail }) => {
   const [email, setEmail] = useState("");
   const [watermarked, setWatermarked] = useState(true);
   const [error, setError] = useState("");
@@ -10,10 +10,11 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails }) => {
   const [album, setAlbum] = useState(sentAlbum);
   const [shared, setShared] = useState("");
   const [allowDownload, setAllowDownload] = useState(true);
-  const [selectedEmail, setSelectedEmail] = useState('');
+  
+
+  
   const handleSelectEmail = (e) => {
     setSelectedEmail(e.target.value);
-    
   };
   const {
     data,
