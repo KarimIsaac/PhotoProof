@@ -422,7 +422,7 @@ const Album = (props) => {
               
             </div>
            
-            {(role.role === "Admin" || role.role === "Photographer") && (
+            {(role === "Admin" || role === "Photographer" || true) && (
   <input
     type="checkbox"
     checked={photo.allowDownload.includes(selectedEmail)}
