@@ -10,8 +10,8 @@ export default function Items() {
    }, []);
     
   return (
-    <div className='items'>
-      <h1 className='home-header'>PhotoProofPro is an online proofing system enabling photographers to deliver beautiful, password protected galleries to their clients.</h1>
+    <div className='items'  >
+      <h1 className='home-header' >PhotoProofPro is an online proofing system enabling photographers to deliver beautiful, password protected galleries to their clients.</h1>
       <div className="grid-container">
       <div>
         <h1>Manage Your Clients</h1>
@@ -33,7 +33,7 @@ export default function Items() {
         <h1>Place Orders</h1>
         <h4>Once your client has made their selections, they can place an order with you. You are sent an email listing their choices and any special instructions.</h4>
       </div>
-      <div data-aos="fade-up"  >
+      <div  >
         <h1>Multilingual</h1>
         <h4>The client interface is available in several languages. If your language is not supported, contact us and we can add it.</h4>
       </div>
