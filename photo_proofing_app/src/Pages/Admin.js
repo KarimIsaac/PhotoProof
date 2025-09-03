@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import ShareAlbum from '../Components/ShareAlbum'; 
 import useFetch from "../Components/useFetch";
 import LoadingSVG from "../Images/loading.svg";
@@ -7,7 +7,7 @@ import LoadingSVG from "../Images/loading.svg";
 const Admin = () => {
     const [selectedAlbum, setSelectedAlbum] = useState(null);
     const { data: albums, loading, error } = useFetch("album/");
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate(); 
 
     if (loading) {
         return (

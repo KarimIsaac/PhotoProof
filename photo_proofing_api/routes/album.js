@@ -1,36 +1,33 @@
 
-const express = require("express"); // Express web server framework
-const router = express.Router(); // Router för express
-const Album = require("../models/Album"); // Album model
-const Photo = require("../models/Photo"); // Photo model
-const verify = require("../verifyToken"); // Verify token
+const express = require("express"); 
+const router = express.Router(); 
+const Album = require("../models/Album"); 
+const Photo = require("../models/Photo"); 
+const verify = require("../verifyToken"); 
 const User = require("../models/User");
-const { createAlbumValidation } = require("../validation"); // Validering
-const fs = require("fs"); // File system
+const { createAlbumValidation } = require("../validation"); 
+const fs = require("fs"); 
 
  
 //Hämta alla album
 router.get("/", verify, async (req, res) => {
   const userId = req.user._id;
 
-
   try {
         const user = await User.findById(userId);
         let albums;
         const userRole = user.role;
-  
+
     if (userRole === 'Admin') {
-      
-      albums = await Album.find();
+        albums = await Album.find();
       
     } else {
-      
       albums = await Album.find({ owner: userId });
-      
+       
     }
     res.status(200).json(albums);
   } catch (err) {
-    res.status(500).json({ error: err.message }); // Om något går fel
+    res.status(500).json({ error: err.message }); 
   }
 });
 
@@ -117,38 +114,54 @@ router.post("/", verify, async (req, res) => {
 router.delete("/:id", verify, async (req, res) => {
   try {
     const album = await Album.findById(req.params.id);
-    await Album.deleteOne({
-      _id: req.params.id,
-    });
+    if (!album) {
+      return res.status(404).json({ error: "Album not found" });
+    }
+
+    // Radera album från databasen
+    await Album.deleteOne({ _id: req.params.id });
+
+    // Försök radera album cover
     fs.unlink(
       `${__dirname}/../../photo_proofing_app/public/Images/AlbumCovers/${album.cover}`,
       (err) => {
-        if (err) throw err;
+        if (err && err.code !== "ENOENT") {
+          console.error("Error deleting album cover:", err);
+        }
       }
     );
+
+    // Hämta alla foton kopplade till albumet
     const photos = await Photo.find({ album: req.params.id });
-    //cascade radera bilder
-    await Photo.deleteMany({
-      album: req.params.id,
+
+    // Cascade radera från databasen
+    await Photo.deleteMany({ album: req.params.id });
+
+    // Försök radera alla foto- och vattenstämplade filer
+    photos.forEach((photo) => {
+      fs.unlink(
+        `${__dirname}/../../photo_proofing_app/public/Images/Photos/${photo.name}`,
+        (err) => {
+          if (err && err.code !== "ENOENT") {
+            console.error("Error deleting photo:", err);
+          }
+        }
+      );
+
+      fs.unlink(
+        `${__dirname}/../../photo_proofing_app/public/Images/Watermarked/wm_${photo.name}`,
+        (err) => {
+          if (err && err.code !== "ENOENT") {
+            console.error("Error deleting watermarked photo:", err);
+          }
+        }
+      );
     });
-    for (let i = 0; i < photos.length; i++) {
-      //Radera fotografi-filer som finns i raderat album
-      fs.unlink(
-        `${__dirname}/../../photo_proofing_app/public/Images/Photos/${photos[i].name}`,
-        (err) => {
-          if (err) throw err;
-        }
-      );
-      fs.unlink(
-        `${__dirname}/../../photo_proofing_app/public/Images/Watermarked/wm_${photos[i].name}`,
-        (err) => {
-          if (err) throw err;
-        }
-      );
-    }
+
     res.json({ Removed: req.params.id });
   } catch (err) {
-    res.status(500).json({ error: err.message }); // Om något går fel
+    console.error("Error deleting album:", err);
+    res.status(500).json({ error: err.message });
   }
 });
 

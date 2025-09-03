@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import '../Sass/notification.css'; // Import your CSS styles
+import '../Sass/notification.css'; 
 
 const mockNotifications = [
-  { id: 1, message: 'New message from Alice' },
-  { id: 2, message: 'Meeting at 3 PM' },
-  // Add more mock notifications here
+  { id: 1, message: 'message 1' },
+  { id: 2, message: 'message 2' },
+  
 ];
 
 const NotificationBar = () => {

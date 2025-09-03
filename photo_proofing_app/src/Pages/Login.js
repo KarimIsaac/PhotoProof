@@ -86,13 +86,14 @@ const Login = () => {
       )}
       {isLoggedIn ? (
         <div className="centerBox">
-          <span>
+          <span className="logg-as">
             You are logged in as <span>{localStorage.getItem("email")}</span>
           </span>
           <br></br>
           <LogOutButton />
         </div>
       ) : (
+      <div className="big-div">
         <form className="loginForm" onSubmit={handleSubmit}>
           <h1>Login</h1>
           <div className="formDiv">
@@ -128,6 +129,7 @@ const Login = () => {
             <Link to="/register">Create new Account</Link>
           </div>
         </form>
+        </div>
       )}
     </div>
   );

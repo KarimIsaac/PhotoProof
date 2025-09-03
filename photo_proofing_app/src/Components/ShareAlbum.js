@@ -205,11 +205,14 @@ const ShareAlbum = ({ sentAlbum, refetchAlbum, handleShowDetails,setSelectedEmai
         
         <div className="invitesDiv">
           <div>
-      <select onChange={handleSelectEmail} value={selectedEmail}>
+      <select className="selected-email" onChange={handleSelectEmail} value={selectedEmail}>
         {sentAlbum.invites.map((invite) => (
           <option key={invite.email} value={invite.email}>{invite.email}</option>
         ))}
       </select>
+      <div class = "down_note">
+  
+  </div>
       {/* Rest of your form and components */}
     </div>
           <h2>Shared</h2>

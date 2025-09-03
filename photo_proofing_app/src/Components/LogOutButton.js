@@ -19,6 +19,7 @@ const LogOutButton = () => {
       </div>
       <div>
         <button
+        className="LogOutButton"
           onClick={() => {
             localStorage.removeItem("email");
             localStorage.removeItem("token");

@@ -54,14 +54,14 @@ router.get('/download/:filename', verify, async (req, res) => {
           const fileBuffer = fs.readFileSync(filePath);
           const ext = path.extname(filename).toLowerCase();
 
-          let contentType = 'image/jpeg'; // Default to jpeg
+          let contentType = 'image/jpeg'; 
           if (ext === '.png') {
-              contentType = 'image/png';
-          } else if (ext === '.webp') {
-              contentType = 'image/webp';
-          }else if(image/jpg){
-            contentType = 'image/jpg';
-          }
+            contentType = 'image/png';
+        } else if (ext === '.webp') {
+            contentType = 'image/webp';
+        } else if (ext === '.jpg') { 
+            contentType = 'image/jpeg'; 
+        }
 
           res.set('Content-Type', contentType);
           res.send(fileBuffer); 
@@ -89,7 +89,7 @@ router.patch("/allowDownload/:id", verify, async (req, res) => {
   try {
     if (user.role === 'Admin' || (user.role === 'Photographer' && photo.owner.toString() === user._id.toString())) {
         
-      if(photo.allowDownload.includes(email)){
+      if(photo.allowDownload.includes(email)){ //checks if the email is included in the list of allowed downloads
         photo.allowDownload.pull(email);
       }else {
         if(email !== "") photo.allowDownload.push(email);

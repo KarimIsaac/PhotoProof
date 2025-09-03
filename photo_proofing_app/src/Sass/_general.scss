@@ -1,3 +1,4 @@
+
 *,
 *::before,
 *::after {
@@ -5,15 +6,20 @@
   word-break: break-word;
   margin: 0;
   padding: 0;
+  font-family: 'Lato';
 }
 html,
 body,
+
 #root {
   min-height: 100vh;
+
+height: 1600px;
 }
 #root {
   display: grid;
   grid-template-rows: auto 1fr 150px;
+  
 }
 a {
   text-decoration: none;
@@ -40,9 +46,10 @@ textarea {
   resize: vertical;
 }
 body {
-  max-width: 1200px;
+  max-width: 1500px;
+  
   margin: auto;
-  background-color: #1a1a1a;
+  
 }
 h1,
 h2,
@@ -55,4 +62,66 @@ h6 {
 }
 .warning {
   color: $warning;
+}
+.loginForm{
+  background: rgba(35,57,66,0.75);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  border: 1px solid rgba(35,57,66,0.375);  position: relative;
+  top: 15%;
+}
+.LogOutButton{
+  width: 70px;
+  position: relative;
+  right:100px;
+  top:-20px;
+}
+.next-button {
+  background-color: #948f8f; 
+  
+  border: none; 
+  color: white; 
+  padding: 20px 20px; 
+  text-align: center; 
+  text-decoration: none; 
+  display: inline-block; 
+  font-size: 16px; 
+  margin: 4px 2px; 
+  cursor: pointer; 
+  border-radius: 100%; 
+  transition: background-color 0.3s, box-shadow 0.2s; /* Smooth transitions for background and shadow */
+}
+
+.next-button:hover {
+ background-color: rgb(13, 9, 85);
+}
+
+.get-more{
+  
+  width: 850px;
+  height: 450px;
+  background-color: #233942;
+  position: relative;
+  left: 450px;
+  top: -610px;
+  z-index: 1;
+color: aliceblue;
+}
+.get-more-info{
+  font-family: "Cormorant", serif;
+  width: 320px;
+  position: relative;
+  left: 220px;
+}
+.register-form{
+  background-color: #0D0F11;
+  width: 1700px;
+  height: 900px;
+ 
+}
+.registerForm{
+  background-color: #233942;
+  color: azure;
+  position: relative;
+  top: 20px;
 }

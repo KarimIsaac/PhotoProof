@@ -81,6 +81,7 @@ const Register = () => {
     );
   return (
     <>
+    <div className="register-form">
       <form className="registerForm" onSubmit={handleSubmit}>
         <h1>Register Account</h1>
         <div className="formDiv">
@@ -168,6 +169,7 @@ const Register = () => {
           <input type="submit" id="submit" value="Register" />
         </div>
       </form>
+      </div>
     </>
   );
 };
