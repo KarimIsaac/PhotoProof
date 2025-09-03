@@ -11,6 +11,7 @@
     "bluebird": "^3.7.2",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
+    "photo_proofing_app": "file:",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.2.2",
